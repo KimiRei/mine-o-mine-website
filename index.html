@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Interaktif @KimiRei</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- 
+    Chosen Palette: Warm Neutrals (Light Beige, Dark Slate, Muted Blue)
+    Application Structure Plan: Halaman ini dirancang sebagai SPA vertikal dengan beberapa bagian logis: Hero (perkenalan), Keahlian (visualisasi), Hobi (kartu interaktif), Kartu Nama (interaksi balikan), dan Kontak. Struktur ini mengarahkan pengunjung melalui cerita Anda secara alami—siapa Anda, apa yang Anda ketahui, apa yang Anda sukai, dan bagaimana cara terhubung. Pendekatan ini lebih menarik daripada file Markdown statis dan menyoroti keterampilan frontend Anda. Kartu Nama ditambahkan untuk memberikan elemen "wow" yang personal dan interaktif.
+    Visualization & Content Choices: 
+    - Area Pembelajaran -> Goal: Compare/Inform -> Viz: Horizontal Bar Chart -> Interaction: Tooltip saat hover untuk menunjukkan detail -> Justification: Mengubah daftar statis menjadi perbandingan visual yang menarik dari area fokus Anda. Library: Chart.js.
+    - Hobi -> Goal: Organize/Engage -> Viz: Grid kartu dengan ikon -> Interaction: Efek skala dan bayangan saat hover -> Justification: Menyajikan minat yang beragam dalam format yang bersih dan modern yang mendorong interaksi. Method: HTML/Tailwind CSS.
+    - Kartu Nama -> Goal: Engage/Provide Contact -> Viz: Kartu yang bisa dibalik (flip card) -> Interaction: Balik kartu saat hover untuk menampilkan detail kontak -> Justification: Memberikan cara yang sangat interaktif dan menarik untuk berbagi informasi kontak utama, menambahkan elemen "wow" visual. Method: HTML/Tailwind CSS dengan transform CSS.
+    - Kontak -> Goal: Action -> Viz: Daftar tautan dengan ikon -> Interaction: Clickable links -> Justification: Panggilan untuk bertindak yang jelas dan standar industri. Method: HTML/Tailwind CSS.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; 
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Styling for the interactive calling card */
+        .flip-card-container {
+            perspective: 1000px; /* Required for 3D effect */
+            width: 300px; /* Fixed width for the card */
+            height: 200px; /* Fixed height for the card */
+            margin: 0 auto; /* Center the card */
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s; /* Smooth flip animation */
+            transform-style: preserve-3d; /* Keep children in 3D space */
+        }
+
+        .flip-card-container:hover .flip-card-inner {
+            transform: rotateY(180deg); /* Flip on hover */
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Hide the back of the element when facing away */
+            backface-visibility: hidden;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .flip-card-front {
+            background-color: #ffffff; /* white */
+            color: #1f2937; /* gray-900 */
+        }
+
+        .flip-card-back {
+            background-color: #4b5563; /* gray-600 */
+            color: #f9fafb; /* gray-50 */
+            transform: rotateY(180deg); /* Start with back face rotated */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <main class="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
+
+        <section id="hero" class="text-center mb-16 md:mb-24">
+            <img src="https://placehold.co/150x150/262626/e5e5e5?text=KimiRei" alt="Foto Profil KimiRei" class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full mb-6 shadow-lg border-4 border-white">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-2">Halo! Saya @KimiRei</h1>
+            <p class="text-lg md:text-xl text-gray-600">Mahasiswa IT sarjana dengan semangat untuk teknologi dan pemrograman.</p>
+        </section>
+
+        <section id="about" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center mb-8">👀 Ketertarikan Saya</h2>
+            <p class="text-center text-lg max-w-2xl mx-auto text-gray-700">
+                Saya sangat tertarik pada <strong class="text-blue-600">koding</strong>, <strong class="text-blue-600">Markdown</strong>, dan <strong class="text-blue-600">pemrograman</strong> secara umum. Saya suka memahami bagaimana teknologi bekerja dan menikmati tantangan membangun sesuatu dari nol, mengubah ide menjadi solusi fungsional.
+            </p>
+        </section>
+        
+        <section id="skills" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center mb-4">🌱 Yang Sedang Saya Pelajari</h2>
+             <p class="text-center text-lg max-w-2xl mx-auto text-gray-700 mb-8">
+                Berikut adalah visualisasi area utama yang sedang saya fokuskan. Arahkan kursor ke bar untuk melihat detail lebih lanjut. Saya selalu mencari tantangan baru untuk memperluas keahlian saya!
+            </p>
+            <div class="chart-container bg-white p-4 rounded-lg shadow-md">
+                <canvas id="skillsChart"></canvas>
+            </div>
+        </section>
+
+        <section id="hobbies" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center mb-8">🎮 Hobi & Minat</h2>
+            <p class="text-center text-lg max-w-2xl mx-auto text-gray-700 mb-8">
+                Di luar dunia koding, berikut adalah beberapa hal yang saya nikmati. Ini membantu saya tetap kreatif dan seimbang.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="text-5xl mb-4">🎮</div>
+                    <h3 class="text-xl font-bold mb-2">Bermain Game</h3>
+                    <p class="text-gray-600">Terutama menikmati game kompetitif seperti Growtopia dan Call of Duty: Mobile.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="text-5xl mb-4">✈️</div>
+                    <h3 class="text-xl font-bold mb-2">Bepergian</h3>
+                    <p class="text-gray-600">Menjelajahi tempat-tempat dan budaya baru untuk memperluas wawasan.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="text-5xl mb-4">🤖</div>
+                    <h3 class="text-xl font-bold mb-2">Merakit Gundam</h3>
+                    <p class="text-gray-600">Hobi yang membutuhkan kesabaran, ketelitian, dan sentuhan kreatif.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="calling-card" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center mb-8">✨ Kartu Nama Interaktif</h2>
+            <p class="text-center text-lg max-w-2xl mx-auto text-gray-700 mb-8">
+                Arahkan kursor ke kartu di bawah ini untuk melihat detail kontak saya. Ini adalah cara yang unik untuk terhubung!
+            </p>
+            <div class="flip-card-container mx-auto">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="https://placehold.co/80x80/0d1117/c9d1d9?text=KR" alt="Logo KimiRei" class="rounded-full mb-4">
+                        <h3 class="text-2xl font-bold">KimiRei</h3>
+                        <p class="text-gray-600">Mahasiswa IT Sarjana</p>
+                        <p class="text-sm mt-2 text-gray-500">Arahkan kursor untuk melihat kontak</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3 class="text-2xl font-bold mb-4">Mari Berinteraksi!</h3>
+                        <p class="text-lg mb-2"><strong>Discord:</strong> JustKimiRei/kimirei</p>
+                        <p class="text-lg mb-2"><strong>Email:</strong> <a href="mailto:your.email@example.com" class="underline hover:text-blue-300">your.email@example.com</a></p>
+                        <p class="text-lg"><strong>LinkedIn:</strong> <a href="https://linkedin.com" target="_blank" class="underline hover:text-blue-300">Profil Saya</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="text-center">
+            <h2 class="text-3xl font-bold mb-4">📫 Cara Menghubungi Saya</h2>
+            <p class="text-lg text-gray-700 mb-6">Jangan ragu untuk berinteraksi atau bertanya! Saya selalu terbuka untuk diskusi.</p>
+            <div class="flex flex-wrap justify-center items-center space-x-4 md:space-x-6 gap-y-4">
+                <a href="https://discord.com" target="_blank" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 flex items-center space-x-2">
+                    <span class="text-2xl font-bold">Discord:</span>
+                    <span class="text-lg">JustKimiRei/kimirei</span>
+                </a>
+                <a href="mailto:your.email@example.com" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 flex items-center space-x-2">
+                    <span class="text-2xl font-bold">Email</span>
+                </a>
+                 <a href="https://linkedin.com" target="_blank" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 flex items-center space-x-2">
+                    <span class="text-2xl font-bold">LinkedIn</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8">
+        <p class="text-gray-500">Pronouns: He/Him</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            
+            const skillsData = {
+                labels: [
+                    'Pemrograman Web (Full-Stack)',
+                    'Generative AI (GenAI)',
+                    'Pengembangan Perangkat Lunak',
+                    'Python'
+                ],
+                datasets: [{
+                    label: 'Tingkat Fokus & Minat',
+                    data: [90, 85, 80, 88],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.6)',
+                        'rgba(16, 185, 129, 0.6)',
+                        'rgba(239, 68, 68, 0.6)',
+                        'rgba(245, 158, 11, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(245, 158, 11, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderSkipped: false,
+                }]
+            };
+
+            const chartOptions = {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.2)'
+                        },
+                        ticks: {
+                            color: '#4b5563'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#1f2937',
+                            font: {
+                                size: 14,
+                                weight: '600'
+                            },
+                            callback: function(value, index, values) {
+                                const label = this.getLabelForValue(value);
+                                if (label.length > 25) {
+                                    return label.substring(0, 25) + '...';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1f2937',
+                        titleFont: {
+                            size: 16
+                        },
+                        bodyFont: {
+                            size: 14
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                return ` Fokus: ${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: skillsData,
+                options: chartOptions
+            });
+        });
+    </script>
+
+</body>
+</html>
